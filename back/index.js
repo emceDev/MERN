@@ -2,6 +2,7 @@ import http from "http";
 import "dotenv/config.js";
 import { register } from "./mongo/User/register.js";
 import { log } from "./mongo/User/log.js";
+import { createOrder } from "./mongo/Orders/createOrder.js";
 const listener = (req, res) => {
 	res.writeHead(200);
 	res.end("Hiellow");
@@ -10,16 +11,7 @@ const listener = (req, res) => {
 };
 const server = http.createServer(listener);
 server.listen(3001);
-register();
+// register();
 // log();
-
-// async function getName() {
-// 	client.connect(async (err) => {
-// 		const Families = client.db("FamilyTree").collection("Families");
-// 		const query = { name: "Jan" };
-// 		const result = Families.findOne(query);
-
-// 		let name = await result;
-// 		console.log(name).then((x) => client.close());
-// 	});
-// }
+createOrder();
+//

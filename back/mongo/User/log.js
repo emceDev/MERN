@@ -15,7 +15,7 @@ export async function log() {
 			userDataDb ? compare(userDataDb, userData) : console.log("no user")
 		)
 		.then((x) => {
-			x ? x : console.log("authentication failed");
+			x ? console.log(x) : console.log("authentication failed");
 		});
 }
 
