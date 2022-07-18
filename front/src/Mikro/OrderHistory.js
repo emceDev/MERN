@@ -1,4 +1,5 @@
 import { Order } from "../Nano/Order";
+import { useEffect } from "react";
 const orders = [
 	{
 		name: "order",
@@ -24,6 +25,7 @@ const orders = [
 	},
 ];
 export const OrderHistory = () => {
+	useEffect(() => {}, []);
 	return (
 		<div>
 			OrderHistory
