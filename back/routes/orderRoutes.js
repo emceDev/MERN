@@ -6,11 +6,11 @@ import {
 	updateOrder,
 } from "../controllers/orderController.js";
 
-const router = express.Router();
+const orderRouter = express.Router();
 
-router.get("/", getOrder);
-router.post("/", setOrder);
-router.put("/:id", updateOrder);
-router.delete("/:id", deleteOrder);
+orderRouter.get("/", getOrder);
+orderRouter.post("/", setOrder);
+orderRouter.put("/:id", updateOrder);
+orderRouter.delete("/:id", deleteOrder);
 
-export { router };
+export { orderRouter };

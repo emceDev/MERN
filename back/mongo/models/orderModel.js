@@ -6,8 +6,9 @@ const orderSchema = new mongoose.Schema({
 		required: [true, "please fill all data"],
 	},
 	creator: {
-		type: String,
-		required: [true, "please fill all data"],
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+		ref: "user",
 	},
 
 	worker: {

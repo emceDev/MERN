@@ -18,8 +18,12 @@ export const userSchema = mongoose.Schema({
 		type: String,
 		required: [true, "please fill password data"],
 	},
+	type: {
+		type: String,
+		required: [true, "please fill type of user"],
+	},
 	orders: {
 		type: Array,
 	},
 });
-export const orderModel = mongoose.model("users", userSchema);
+export const userModel = mongoose.model("user", userSchema);

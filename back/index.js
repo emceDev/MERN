@@ -1,19 +1,18 @@
-import http from "http";
 import "dotenv/config.js";
-import { register } from "./mongo/User/register.js";
-import { log } from "./mongo/User/log.js";
-import { createOrder } from "./mongo/Orders/createOrder.js";
 import { client } from "./mongo/config.js";
-import express from "express";
-import { router } from "./routes/orderRoutes.js";
-
+import express, { json } from "express";
+import { orderRouter } from "./routes/orderRoutes.js";
+import { userRouter } from "./routes/userRoutes.js";
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use("/api/order", orderRouter);
+app.use("/api/user", userRouter);
 
 app.listen(3001, () => {
 	console.log("server is on");
 });
-
-app.use("/api/order", router);
 
 client();
 // register();
