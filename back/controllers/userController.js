@@ -26,7 +26,14 @@ export const setUser = asyncHandler(async (req, res) => {
 	});
 
 	if (user) {
-		return res.status(201).json({ _id: user.id, email, name, surname, type });
+		return res.status(201).json({
+			_id: user.id,
+			email,
+			name,
+			surname,
+			type,
+			token: tokenGen(user._id),
+		});
 	} else {
 		res.status(400);
 		throw new Error("invalid user data");
@@ -37,9 +44,12 @@ export const logUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body;
 	let user = await userModel.findOne({ email });
 	if (user && (await bcrypt.compare(password, user.password))) {
-		res
-			.status(200)
-			.json({ _id: user.id, password: user.password, email: user.email });
+		res.status(200).json({
+			_id: user.id,
+			password: user.password,
+			email: user.email,
+			token: tokenGen(user._id),
+		});
 	} else {
 		res.status(400);
 		throw new Error("invalid credentials");
@@ -69,3 +79,17 @@ export const deleteUser = asyncHandler(async (req, res) => {
 	const deleteOrder = await user.remove();
 	res.status(200).json({ id: req.params.id });
 });
+
+export const getUser = asyncHandler(async (req, res) => {
+	// console.log(req.user);
+	// { _id, name, email, surname, type, orders }
+	const userData = await userModel.findById(req.user._id);
+
+	userData.password = undefined;
+	console.log(userData);
+	res.json(userData);
+});
+
+export const tokenGen = (id) => {
+	return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "2d" });
+};
