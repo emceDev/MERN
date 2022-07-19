@@ -1,24 +1,48 @@
 import asyncHandler from "express-async-handler";
 import { orderModel } from "../mongo/models/orderModel.js";
+import { userModel } from "../mongo/models/userModel.js";
+import { client } from "../mongo/config.js";
+import mongoose from "mongoose";
 
 export const getOrder = asyncHandler(async (req, res) => {
-	let orders = await orderModel.find();
+	let orders = await orderModel.find({ creator: req.user.id });
 	res.status(200).json(orders);
 });
-export const setOrder = asyncHandler(async (req, res) => {
-	const order = await orderModel.create({
-		name: "order12",
-		creator: "62d18d0c104f8021fe678c80",
-		worker: null,
-		description: "kasdmas;k",
-		status: "waiting",
-		commment: null,
-	});
-	res.json(order);
-});
 
+// creator - creates order - Transaction needed here
+export const setOrder = asyncHandler(async (req, res) => {
+	const { description, name } = req.body;
+
+	try {
+		const order = await orderModel.create({
+			name,
+			creator: req.user.id,
+			worker: null,
+			description,
+			status: "waiting",
+			commment: null,
+		});
+		await userModel.findByIdAndUpdate(
+			req.user.id,
+			{ $push: { orders: req.params.id } },
+			{ new: false }
+		);
+		return res.json({ order });
+	} catch (error) {
+		res.json({ message: "failed to set" });
+		throw Error("failed to update order ");
+	}
+});
+// updates order
 export const updateOrder = asyncHandler(async (req, res) => {
 	const order = await orderModel.findById(req.params.id);
+	console.log("==========");
+	console.log(order);
+	console.log("==========");
+	console.log(req.body);
+	console.log("==========");
+	console.log(req.user.id);
+	console.log("==========");
 	if (!order) {
 		res.status(400);
 		throw new Error("order not found");
@@ -28,9 +52,12 @@ export const updateOrder = asyncHandler(async (req, res) => {
 		req.body,
 		{ new: true }
 	);
+	console.log("==========");
+	console.log(updatedOrder);
+	console.log("==========");
 	res.status(200).json(updatedOrder);
 });
-
+// deletes order by id
 export const deleteOrder = asyncHandler(async (req, res) => {
 	const order = await orderModel.findById(req.params.id);
 	if (!order) {
@@ -39,4 +66,43 @@ export const deleteOrder = asyncHandler(async (req, res) => {
 	}
 	const deleteOrder = await order.remove();
 	res.status(200).json({ id: req.params.id });
+});
+
+// gets all active orders
+export const getOrderList = asyncHandler(async (req, res) => {
+	let orders = await orderModel.find({ status: "waiting" });
+	res.status(200).json(orders);
+});
+// activates order - Transaction needed here
+export const activateOrder = asyncHandler(async (req, res) => {
+	const order = await orderModel.findById(req.params.id);
+	if (!order) {
+		res.status(400);
+		throw new Error("order not found");
+	}
+	// transaction should be made here.
+	try {
+		await orderModel.findByIdAndUpdate(
+			req.params.id,
+			{ $set: { status: "in-progress", worker: req.user.id } },
+			{ new: false }
+		);
+		await userModel.findByIdAndUpdate(
+			req.user.id,
+			{ $push: { orders: req.params.id } },
+			{ new: false }
+		);
+		return res.json({ order });
+	} catch (error) {
+		throw Error("error at changing order status or setting user's orders");
+	}
+});
+
+export const getUserOrders = asyncHandler(async (req, res) => {
+	let orders = await userModel.find({ id: req.user.id });
+	if (!orders) {
+		res.status(400).json({ message: "no orders" });
+	}
+	console.Consolelog(orders);
+	res.status(200).json(orders);
 });
