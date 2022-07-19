@@ -1,8 +1,6 @@
 import asyncHandler from "express-async-handler";
 import { orderModel } from "../mongo/models/orderModel.js";
 import { userModel } from "../mongo/models/userModel.js";
-import { client } from "../mongo/config.js";
-import mongoose from "mongoose";
 
 export const getOrder = asyncHandler(async (req, res) => {
 	let orders = await orderModel.find({ creator: req.user.id });
