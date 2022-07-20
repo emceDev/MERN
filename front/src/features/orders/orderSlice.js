@@ -50,6 +50,34 @@ export const loadUserOrders = createAsyncThunk(
 		}
 	}
 );
+export const deleteOrder = createAsyncThunk(
+	"orders/put",
+	async (query, thunkApi) => {
+		try {
+			const token = thunkApi.getState().auth.user.token;
+			return await orderService.deleteOrder(query, token);
+		} catch (error) {}
+	}
+);
+export const updateOrder = createAsyncThunk(
+	"orders/put",
+	async (url, orderData, thunkApi) => {
+		try {
+			const token = thunkApi.getState().auth.user.token;
+			return await orderService.updateOrder(url, orderData, token);
+		} catch (error) {
+			console.log("order slice error");
+			console.log(error);
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+			return thunkApi.rejectWithValue(message);
+		}
+	}
+);
 const orderSlice = createSlice({
 	name: "ordersSlice",
 	initialState,
@@ -81,8 +109,22 @@ const orderSlice = createSlice({
 				state.isLoading = false;
 				state.isError = true;
 				state.message = action.payload;
+			})
+			.addCase(deleteOrder.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(deleteOrder.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isSucces = true;
+				state.userOrders = state.userOrders.filter((ord) =>
+					ord._id === action.payload.id ? (ord.status = "removed") : ord
+				);
+			})
+			.addCase(deleteOrder.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.message = action.payload;
 			});
 	},
 });
-
 export default orderSlice.reducer;

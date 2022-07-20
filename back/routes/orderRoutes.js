@@ -17,7 +17,7 @@ orderRouter.get("/", protect, getOrder);
 orderRouter.post("/", protect, setOrder);
 orderRouter.put("/:id", protect, updateOrder);
 orderRouter.put("/:id/activate", protect, activateOrder);
-orderRouter.delete("/:id", protect, deleteOrder);
+orderRouter.put("/delete/:id", protect, deleteOrder);
 orderRouter.get("/orderList", protect, getOrderList);
 orderRouter.get("/userOrder", protect, getUserOrders);
 export { orderRouter };

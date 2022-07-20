@@ -1,7 +1,7 @@
 import { Order } from "../Nano/Order";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { loadUserOrders } from "../features/orders/orderSlice";
+import { loadUserOrders, deleteOrder } from "../features/orders/orderSlice";
 
 export const OrderHistory = () => {
 	// const [or, setOr] = useState(null);
@@ -10,18 +10,16 @@ export const OrderHistory = () => {
 	);
 	const dispatch = useDispatch();
 	function onLoad() {
-		console.log("loading ");
 		dispatch(loadUserOrders());
 	}
+	function onDeleteOrder(id) {
+		console.log(id);
+		dispatch(deleteOrder(id));
+	}
 	useEffect(() => {
-		console.log("mounted");
 		onLoad();
 	}, []);
-	useEffect(() => {
-		console.log("ordersChanges");
-		console.log(userOrders);
-		// setOr(userOrders);
-	}, [userOrders]);
+
 	return (
 		<div>
 			OrderHistory
@@ -60,7 +58,13 @@ export const OrderHistory = () => {
 							</tr>
 						</thead>
 						{userOrders.map((order) => {
-							return <Order order={order} />;
+							return order ? (
+								<Order
+									order={order}
+									key={order.id}
+									deleteOrder={(id) => onDeleteOrder(id)}
+								/>
+							) : null;
 						})}
 					</table>
 				</div>

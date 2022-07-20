@@ -61,8 +61,13 @@ export const deleteOrder = asyncHandler(async (req, res) => {
 		res.status(400);
 		throw new Error("order not found");
 	}
-	const deleteOrder = await order.remove();
-	res.status(200).json({ id: req.params.id });
+	await orderModel.findByIdAndUpdate(
+		req.params.id,
+		{ $set: req.body },
+		{ new: false }
+	);
+
+	return res.status(200).json({ id: req.params.id });
 });
 
 // gets all active orders
