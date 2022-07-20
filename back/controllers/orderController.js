@@ -10,7 +10,6 @@ export const getOrder = asyncHandler(async (req, res) => {
 // creator - creates order - Transaction needed here
 export const setOrder = asyncHandler(async (req, res) => {
 	const { description, name } = req.body;
-
 	try {
 		const order = await orderModel.create({
 			name,
@@ -22,8 +21,8 @@ export const setOrder = asyncHandler(async (req, res) => {
 		});
 		await userModel.findByIdAndUpdate(
 			req.user.id,
-			{ $push: { orders: req.params.id } },
-			{ new: false }
+			{ $push: { orders: order._id } },
+			{ new: true }
 		);
 		return res.json({ order });
 	} catch (error) {
@@ -68,6 +67,7 @@ export const deleteOrder = asyncHandler(async (req, res) => {
 
 // gets all active orders
 export const getOrderList = asyncHandler(async (req, res) => {
+	// check token if user === worker-pass result
 	let orders = await orderModel.find({ status: "waiting" });
 	res.status(200).json(orders);
 });
@@ -97,10 +97,14 @@ export const activateOrder = asyncHandler(async (req, res) => {
 });
 
 export const getUserOrders = asyncHandler(async (req, res) => {
-	let orders = await userModel.find({ id: req.user.id });
-	if (!orders) {
-		res.status(400).json({ message: "no orders" });
+	const userData = await userModel.findById(req.user._id);
+	if (!userData.orders) {
+		res.status(400).json({ message: "no orders found" });
 	}
-	console.Consolelog(orders);
-	res.status(200).json(orders);
+
+	return Promise.all(
+		userData.orders.map(async (order) => {
+			return await orderModel.findById(order);
+		})
+	).then((x) => res.status(200).json(x));
 });

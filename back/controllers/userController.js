@@ -42,12 +42,16 @@ export const setUser = asyncHandler(async (req, res) => {
 
 export const logUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body;
+
 	let user = await userModel.findOne({ email });
 	if (user && (await bcrypt.compare(password, user.password))) {
 		res.status(200).json({
 			_id: user.id,
-			password: user.password,
+			surname: user.surname,
+			name: user.name,
+			type: user.type,
 			email: user.email,
+			orders: user.orders,
 			token: tokenGen(user._id),
 		});
 	} else {

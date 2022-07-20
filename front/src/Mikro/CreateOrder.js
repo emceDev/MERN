@@ -1,9 +1,15 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { submitOrder } from "../features/orders/orderSlice";
 export const CreateOrder = () => {
 	const [name, setName] = useState();
-	const [creator, setCreator] = useState();
 	const [description, setDescription] = useState();
-	const [status, setStatus] = useState();
+	const { user } = useSelector((state) => state.auth);
+	const orderData = { name, creator: user._id, description };
+	const dispatch = useDispatch();
+	async function onSubmitOrder() {
+		dispatch(submitOrder(orderData));
+	}
 	return (
 		<div style={{ width: "40vw" }}>
 			CreateOrder
@@ -41,6 +47,7 @@ export const CreateOrder = () => {
 					</span>
 				</div>
 			</div>
+			<button onClick={() => onSubmitOrder()}>submit order</button>
 		</div>
 	);
 };

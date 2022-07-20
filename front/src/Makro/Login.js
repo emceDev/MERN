@@ -1,11 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login, reset } from "../features/auth/authSlice";
+
 export const Login = () => {
 	const [email, setEmail] = useState(null);
-	const [pass, setPass] = useState(null);
+	const [password, setPassword] = useState(null);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
-	function login() {
-		console.log(email, pass);
+	const { user, isLoading, isError, isSuccess, message } = useSelector(
+		(state) => state.auth
+	);
+	useEffect(() => {
+		console.log("usercganges");
+		if (isError) {
+			console.log("error in register effect");
+			console.log(message);
+		}
+		if (isSuccess || user) {
+			navigate("/client");
+		}
+		dispatch(reset());
+	}, [user, isError, isSuccess, message, navigate, dispatch]);
+
+	function loginSubmit() {
+		const userData = { email, password };
+
+		console.log(userData);
+		dispatch(login(userData));
 	}
+
 	return (
 		<div style={{ width: "40vw" }}>
 			<div class="field">
@@ -35,7 +60,7 @@ export const Login = () => {
 						type="password"
 						placeholder="Text input"
 						onChange={(e) => {
-							setPass(e.target.value);
+							setPassword(e.target.value);
 						}}
 					/>
 				</div>
@@ -46,7 +71,7 @@ export const Login = () => {
 					<button
 						class="button is-link"
 						onClick={() => {
-							login();
+							loginSubmit();
 						}}
 					>
 						Submit

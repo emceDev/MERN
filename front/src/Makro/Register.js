@@ -1,13 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { register, reset } from "../features/auth/authSlice";
+
 export const Register = () => {
 	const [name, setName] = useState(null);
+	const [surname, setSurname] = useState(null);
 	const [email, setEmail] = useState(null);
-	const [pass, setPass] = useState(null);
+	const [password, setPass] = useState(null);
 	const [type, setType] = useState("client");
+	const { user, isLoading, isError, isSuccess, message } = useSelector(
+		(state) => state.auth
+	);
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	useEffect(() => {
+		console.log("effect");
+		if (isError) {
+			console.log("error in register effect");
+			console.log(message);
+		}
+		if (isSuccess || user) {
+			navigate(`/${user.type}`);
+		}
+		dispatch(reset());
+	}, [user, isError, isSuccess, message, navigate, dispatch]);
 
-	function register() {
-		console.log(name, email, pass, type);
+	async function submitForm() {
+		const userData = {
+			name,
+			email,
+			password,
+			surname,
+			type,
+		};
+		dispatch(register(userData));
 	}
+
 	return (
 		<div style={{ width: "40vw" }}>
 			<div class="field">
@@ -18,6 +47,23 @@ export const Register = () => {
 						type="text"
 						placeholder="Name"
 						onChange={(e) => setName(e.target.value)}
+					/>
+					<span class="icon is-small is-left">
+						<i class="fas fa-envelope"></i>
+					</span>
+					<span class="icon is-small is-right">
+						<i class="fas fa-exclamation-triangle"></i>
+					</span>
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Surname</label>
+				<div class="control">
+					<input
+						class="input"
+						type="text"
+						placeholder="Name"
+						onChange={(e) => setSurname(e.target.value)}
 					/>
 					<span class="icon is-small is-left">
 						<i class="fas fa-envelope"></i>
@@ -90,7 +136,7 @@ export const Register = () => {
 					<button
 						class="button is-link"
 						onClick={() => {
-							register();
+							submitForm();
 						}}
 					>
 						Submit
