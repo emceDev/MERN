@@ -24,6 +24,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/order", orderRouter);
 app.use("/api/user", userRouter);
 
+if (process.env.NODE_ENV === "production") {
+	app.use(
+		express.static(path.join(__dirname, "../front", "build", "index.html"))
+	);
+} else {
+	app.get("/", (res, req) => {
+		res.send("go to prod m8");
+	});
+}
+
 app.listen(3002, () => {
 	console.log("server is on");
 });

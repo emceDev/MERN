@@ -50,6 +50,25 @@ export const loadUserOrders = createAsyncThunk(
 		}
 	}
 );
+export const loadAllOrders = createAsyncThunk(
+	"orders/getall",
+	async (query, thunkApi) => {
+		try {
+			const token = thunkApi.getState().auth.user.token;
+			return await orderService.getAllOrders(query, token);
+		} catch (error) {
+			console.log("order slice error");
+			console.log(error);
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+			return thunkApi.rejectWithValue(message);
+		}
+	}
+);
 export const deleteOrder = createAsyncThunk(
 	"orders/put",
 	async (query, thunkApi) => {
@@ -65,6 +84,25 @@ export const updateOrder = createAsyncThunk(
 		try {
 			const token = thunkApi.getState().auth.user.token;
 			return await orderService.updateOrder(url, orderData, token);
+		} catch (error) {
+			console.log("order slice error");
+			console.log(error);
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+			return thunkApi.rejectWithValue(message);
+		}
+	}
+);
+export const activateOrder = createAsyncThunk(
+	"orders/activate",
+	async (url, thunkApi) => {
+		try {
+			const token = thunkApi.getState().auth.user.token;
+			return await orderService.activateOrder(url, token);
 		} catch (error) {
 			console.log("order slice error");
 			console.log(error);
@@ -121,6 +159,37 @@ const orderSlice = createSlice({
 				);
 			})
 			.addCase(deleteOrder.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.message = action.payload;
+			})
+			.addCase(loadAllOrders.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(loadAllOrders.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isSucces = true;
+				state.orders = action.payload;
+			})
+			.addCase(loadAllOrders.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.message = action.payload;
+			})
+			.addCase(activateOrder.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(activateOrder.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isSucces = true;
+				state.orders = state.orders.filter((ord) =>
+					ord._id === action.payload.order._id
+						? (ord.status = "in-progress")
+						: ord
+				);
+				state.userOrders.push(action.payload.order);
+			})
+			.addCase(activateOrder.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
 				state.message = action.payload;

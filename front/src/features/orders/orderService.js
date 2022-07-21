@@ -51,6 +51,19 @@ const getUserOrders = async (query, token) => {
 	}
 	return res.data;
 };
+const getAllOrders = async (query, token) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer: ${token}`,
+			params: { query: query, user: token },
+		},
+	};
+	const res = await axios.get(API_URL + "/orderList", config);
+	if (res.data) {
+		window.localStorage.setItem("Orders", res.data);
+	}
+	return res.data;
+};
 const updateOrder = async (url, orderData, token) => {
 	const config = {
 		headers: {
@@ -62,11 +75,24 @@ const updateOrder = async (url, orderData, token) => {
 
 	return res.data;
 };
+const activateOrder = async (url, token) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer: ${token}`,
+			params: { user: token },
+		},
+	};
+	const res = await axios.put(API_URL + url + "/activate", {}, config);
+
+	return res.data;
+};
 const orderService = {
 	create,
 	deleteOrder,
 	getUserOrders,
 	updateOrder,
+	getAllOrders,
+	activateOrder,
 };
 
 export default orderService;

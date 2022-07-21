@@ -1,24 +1,27 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Order } from "../Nano/Order";
-import { loadUserOrders, updateOrder } from "../features/orders/orderSlice";
+import { loadAllOrders, activateOrder } from "../features/orders/orderSlice";
 
 export const OrderList = () => {
-	const orders = useSelector((state) => state.order);
+	const { orders, isLoading, isError, isSuccess, message } = useSelector(
+		(state) => state.order
+	);
 	const dispatch = useDispatch();
 	function onLoad() {
-		dispatch(loadUserOrders());
-	}
-	function onUpdate(id, data) {
-		console.log(id, data);
+		dispatch(loadAllOrders());
 	}
 	useEffect(() => {
 		onLoad();
 	}, []);
 	useEffect(() => {
-		console.log(orders.orders);
+		console.log(orders);
 	}, [orders]);
-
+	function onActivateOrder(id) {
+		console.log("activating id");
+		console.log(id);
+		dispatch(activateOrder(id));
+	}
 	return (
 		<div>
 			<div>
@@ -42,14 +45,19 @@ export const OrderList = () => {
 							</th>
 						</tr>
 					</thead>
-					{orders.orders.map((order) => {
-						return (
-							<Order
-								order={order.order}
-								// updateOrder={() => onUpdate("123", "123")}
-							/>
-						);
-					})}
+					{orders ? (
+						orders.map((order) => {
+							return (
+								<Order
+									order={order}
+									type="worker"
+									deleteOrder={(id) => onActivateOrder(id)}
+								/>
+							);
+						})
+					) : (
+						<p>no orderds yet!</p>
+					)}
 				</table>
 			</div>
 		</div>
