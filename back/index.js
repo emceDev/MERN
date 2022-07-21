@@ -1,9 +1,15 @@
 import "dotenv/config.js";
 import { client } from "./mongo/config.js";
-import express, { json } from "express";
+import express from "express";
 import { orderRouter } from "./routes/orderRoutes.js";
 import { userRouter } from "./routes/userRoutes.js";
 import cors from "cors";
+
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 const app = express();
 
 const whitelist = ["http://localhost:3000"];
@@ -17,29 +23,25 @@ const corsOptions = {
 	},
 	credentials: false,
 };
-app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/order", orderRouter);
 app.use("/api/user", userRouter);
 
-if (process.env.NODE_ENV === "production") {
-	app.use(
-		express.static(path.join(__dirname, "../front", "build", "index.html"))
-	);
-} else {
-	app.get("/", (res, req) => {
-		res.send("go to prod m8");
+// hot fix due to prettier
+if (process.env.NODE_ENV === '"production";') {
+	app.use(express.static(path.join(__dirname, "../front/build")));
+	app.get("*", (req, res) => {
+		res.sendFile(
+			path.resolve(__dirname, "../", "front", "build", "index.html")
+		);
 	});
+} else {
+	app.use(cors(corsOptions));
+	app.get("/", (req, res) => res.send("env set to dev not prod"));
 }
 
 app.listen(3002, () => {
 	console.log("server is on");
 });
-
-client();
-// register();
-// log();
-// createOrder();
-//
