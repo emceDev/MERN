@@ -29,8 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/order", orderRouter);
 app.use("/api/user", userRouter);
 
-// hot fix due to prettier
-if (process.env.NODE_ENV === '"production";') {
+if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "../front/build")));
 	app.get("*", (req, res) => {
 		res.sendFile(
@@ -38,10 +37,10 @@ if (process.env.NODE_ENV === '"production";') {
 		);
 	});
 } else {
-	app.use(cors(corsOptions));
 	app.get("/", (req, res) => res.send("env set to dev not prod"));
 }
-
+app.use(cors(corsOptions));
 app.listen(3002, () => {
 	console.log("server is on");
 });
+client();

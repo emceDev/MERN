@@ -13,6 +13,7 @@ export const client = async () => {
 		console.log("connection success");
 		return await mongoose.connect(uri);
 	} catch (error) {
+		console.log(uri);
 		console.log("error with connection", error);
 	}
 };
