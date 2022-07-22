@@ -1,4 +1,4 @@
-import "dotenv/config.js";
+import "dotenv/config";
 import { client } from "./mongo/config.js";
 import express from "express";
 import { orderRouter } from "./routes/orderRoutes.js";
@@ -7,6 +7,7 @@ import cors from "cors";
 
 import path from "path";
 import { fileURLToPath } from "url";
+
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
@@ -41,6 +42,6 @@ if (process.env.NODE_ENV === "production") {
 }
 app.use(cors(corsOptions));
 app.listen(3002, () => {
-	console.log("server is on");
+	console.log("server is on	");
 });
 client();
