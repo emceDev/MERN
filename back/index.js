@@ -30,16 +30,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/order", orderRouter);
 app.use("/api/user", userRouter);
 
-if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "../front/build")));
-	app.get("*", (req, res) => {
-		res.sendFile(
-			path.resolve(__dirname, "../", "front", "build", "index.html")
-		);
-	});
-} else {
-	app.get("/", (req, res) => res.send("env set to dev not prod"));
-}
+// nginx will serve the front
+
+// if (process.env.NODE_ENV === "production") {
+// 	app.use(express.static(path.join(__dirname, "../front/build")));
+// 	app.get("*", (req, res) => {
+// 		res.sendFile(
+// 			path.resolve(__dirname, "../", "front", "build", "index.html")
+// 		);
+// 	});
+// } else {
+// 	app.get("/", (req, res) => res.send("env set to dev not prod"));
+// }
 app.use(cors(corsOptions));
 app.listen(3002, () => {
 	console.log("server is on	");
