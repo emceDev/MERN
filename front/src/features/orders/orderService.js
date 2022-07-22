@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3002/api/order/";
+const API_URL =
+	process.env.NODE_ENV === "production"
+		? "/api/order/"
+		: "http://localhost:3002/api/order/";
 
 const create = async (orderData, token) => {
 	const config = {
