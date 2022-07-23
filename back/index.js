@@ -12,7 +12,7 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 const app = express();
-const whitelist = [];
+let whitelist = [];
 process.env.NODE_ENV === "production"
 	? (whitelist = [])
 	: (whitelist = ["http://localhost:3000"]);
