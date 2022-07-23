@@ -35,16 +35,16 @@ app.use("/api/user", userRouter);
 
 // nginx will serve the front
 
-if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.join(__dirname, "../front/build")));
-	app.get("*", (req, res) => {
-		res.sendFile(
-			path.resolve(__dirname, "../", "front", "build", "index.html")
-		);
-	});
-} else {
-	app.get("/", (req, res) => res.send("env set to dev not prod"));
-}
+// if (process.env.NODE_ENV === "production") {
+// 	app.use(express.static(path.join(__dirname, "../front/build")));
+// 	app.get("*", (req, res) => {
+// 		res.sendFile(
+// 			path.resolve(__dirname, "../", "front", "build", "index.html")
+// 		);
+// 	});
+// } else {
+// 	app.get("/", (req, res) => res.send("env set to dev not prod"));
+// }
 
 app.listen(3002, () => {
 	console.log("server is on	");
