@@ -12,34 +12,32 @@ export const Navigation = () => {
 		dispatch(reset());
 		navigate("/");
 	}
-	useEffect(() => {
-		console.log("user logged in nab");
-	}, [user]);
+
 	return (
 		<div>
 			<Link to="/">
-				<button>HomePage</button>
+				<button class="button">HomePage</button>
+			</Link>
+			<Link to="/worker">
+				<button class="button">Worker</button>
+			</Link>
+			<Link to="/client">
+				<button class="button">Client</button>
 			</Link>
 			{user ? (
-				<button onClick={() => logOut()}>Logout</button>
+				<button class="button" onClick={() => logOut()}>
+					Logout
+				</button>
 			) : (
 				<>
 					<Link to="/login">
-						<button>Login</button>
+						<button class="button">Login</button>
 					</Link>
 					<Link to="/register">
-						<button>Register</button>
+						<button class="button">Register</button>
 					</Link>
 				</>
 			)}
-
-			<Link to="/worker">
-				<button>Worker</button>
-			</Link>
-			<Link to="/client">
-				<button>Client</button>
-			</Link>
-			{/* <button onClick={}>logOut</button> */}
 		</div>
 	);
 };

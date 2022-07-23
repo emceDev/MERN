@@ -12,8 +12,11 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 const app = express();
+const whitelist = [];
+process.env.NODE_ENV === "production"
+	? (whitelist = [])
+	: (whitelist = ["http://localhost:3000"]);
 
-// const whitelist = ["http://localhost:3000"];
 const corsOptions = {
 	origin: function (origin, callback) {
 		if (!origin || whitelist.indexOf(origin) !== -1) {
@@ -24,7 +27,7 @@ const corsOptions = {
 	},
 	credentials: false,
 };
-
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/order", orderRouter);
@@ -42,7 +45,7 @@ if (process.env.NODE_ENV === "production") {
 } else {
 	app.get("/", (req, res) => res.send("env set to dev not prod"));
 }
-// app.use(cors(corsOptions));
+
 app.listen(3002, () => {
 	console.log("server is on	");
 });

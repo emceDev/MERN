@@ -22,11 +22,17 @@ export const Order = (props) => {
 			{finalized ? <td>{finalized}</td> : null}
 			{comment ? <td>{comment}</td> : null}
 			{props.type === "worker" ? (
-				<button onClick={() => props.deleteOrder(props.order._id)}>
+				<button
+					className="button"
+					onClick={() => props.deleteOrder(props.order._id)}
+				>
 					activateOrder
 				</button>
 			) : (
-				<button onClick={() => props.deleteOrder(props.order._id)}>
+				<button
+					className="button"
+					onClick={() => props.deleteOrder(props.order._id)}
+				>
 					deleteOrder
 				</button>
 			)}

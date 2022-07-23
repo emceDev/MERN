@@ -3,9 +3,11 @@ import { OrderList } from "../Mikro/OrderList";
 
 export const Worker = () => {
 	return (
-		<div>
-			<OrderHistory />
-			<OrderList />
+		<div className="container">
+			<section class="section">
+				<OrderHistory />
+				<OrderList />
+			</section>
 		</div>
 	);
 };
