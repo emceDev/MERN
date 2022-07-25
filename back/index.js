@@ -7,12 +7,13 @@ import cors from "cors";
 
 import path from "path";
 import { fileURLToPath } from "url";
+import { analyticsRouter } from "./routes/analyticsRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 const app = express();
-let whitelist = [];
+let whitelist = ["http://localhost:3000"];
 process.env.NODE_ENV === "production"
 	? (whitelist = [])
 	: (whitelist = ["http://localhost:3000"]);
@@ -32,6 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/order", orderRouter);
 app.use("/api/user", userRouter);
+app.use("/analytics", analyticsRouter);
 
 // nginx will serve the front
 

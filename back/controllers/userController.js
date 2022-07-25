@@ -93,7 +93,6 @@ export const getUser = asyncHandler(async (req, res) => {
 	console.log(userData);
 	res.json(userData);
 });
-
 export const tokenGen = (id) => {
 	return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "2d" });
 };
