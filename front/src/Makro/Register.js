@@ -38,7 +38,7 @@ export const Register = () => {
 	}
 
 	return (
-		<div style={{ width: "40vw" }}>
+		<div className="section form" style={{ width: "40vw" }}>
 			<div class="field">
 				<label class="label">Name</label>
 				<div class="control">

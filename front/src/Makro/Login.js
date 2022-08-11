@@ -32,9 +32,9 @@ export const Login = () => {
 	}
 
 	return (
-		<div style={{ width: "40vw" }}>
+		<section className="section form" style={{ width: "40vw" }}>
 			<div class="field">
-				<label class="label">Email</label>
+				<label class="label">test Email: 2</label>
 				<div class="control">
 					<input
 						class="input"
@@ -53,7 +53,7 @@ export const Login = () => {
 			</div>
 
 			<div class="field">
-				<label class="label">Password</label>
+				<label class="label">test Password: 2</label>
 				<div class="control">
 					<input
 						class="input"
@@ -81,6 +81,6 @@ export const Login = () => {
 					<button class="button is-link is-light">Cancel</button>
 				</div>
 			</div>
-		</div>
+		</section>
 	);
 };

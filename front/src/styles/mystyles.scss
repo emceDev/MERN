@@ -1,7 +1,20 @@
 @charset "utf-8";
 @import "../../node_modules/bulma/bulma.sass";
 
+$bcgWhite:rgba(255, 255, 255, 0.907);
 $section-background-color:#FA7C91;
+svg{
+    z-index: -1000;
+}
+.section{
+    margin:0 auto;
+    background:$bcgWhite;
+}
+.field{
+
+    background-color: white;
+}
+
 // $section-padding:100px;
 // Import only what you need from Bulma
 // @import "../node_modules/bulma/sass/utilities/_all.sass";
