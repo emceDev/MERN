@@ -3,16 +3,19 @@
 $mobile:1000px;
 $bcgWhite:rgba(255, 255, 255, 0.907);
 $section-background-color:#FA7C91;
+
 svg{
     z-index: -1000;
 }
 .section{
-    width: 50vw;
+    transition: ease-out width 0.2s;
+    width: 90vw;
     margin:0 auto;
     background:$bcgWhite;
-    @include until($mobile) {
-        width: 80vw;
+    @include until($desktop) {
+        width: 90vw;
       }
+ 
 }
 
 

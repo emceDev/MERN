@@ -30,7 +30,11 @@ export const Navigation = () => {
 				</a>
 			</div>
 			<div className={active ? "navbar-menu is-active" : "navbar-menu"}>
-				<NavLinks user={user} logout={() => logOut()} />
+				<NavLinks
+					switchOff={() => setActive(false)}
+					user={user}
+					logout={() => logOut()}
+				/>
 			</div>
 		</div>
 	);
@@ -39,7 +43,7 @@ export const Navigation = () => {
 const NavLinks = (props) => {
 	return (
 		<>
-			<div className="navbar-start">
+			<div className="navbar-start" onClick={() => props.switchOff()}>
 				<Link to="/" className="navbar-item">
 					<button class="button">HomePage</button>
 				</Link>
@@ -52,7 +56,7 @@ const NavLinks = (props) => {
 					<button class="button">Client</button>
 				</Link>
 			</div>
-			<div className="navbar-end">
+			<div className="navbar-end" onClick={() => props.switchOff()}>
 				{props.user ? (
 					<div className="navbar-item">
 						<button class="button" onClick={() => props.logout()}>
