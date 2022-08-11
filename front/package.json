@@ -19,7 +19,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "css-build": "node-sass --omit-source-map-url sass/mystyles.scss css/mystyles.css",
+    "css-watch": "npm run css-build -- --watch",
+    "start": "react-scripts start & npm run css-watch",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

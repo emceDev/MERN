@@ -1,5 +1,5 @@
 import "./App.css";
-import "bulma/css/bulma.min.css";
+import "./styles/mystyles.scss";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Client } from "./Makro/Client";
 import { Worker } from "./Makro/Worker";
