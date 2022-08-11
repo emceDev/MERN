@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 let whitelist = ["http://localhost:3000"];
 process.env.NODE_ENV === "production"
-	? (whitelist = [])
+	? (whitelist = ["http://54.159.99.206"])
 	: (whitelist = ["http://localhost:3000"]);
 
 const corsOptions = {
