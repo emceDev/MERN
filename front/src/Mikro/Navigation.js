@@ -19,6 +19,7 @@ export const Navigation = () => {
 			<div class="navbar-brand">
 				<a
 					role="button"
+					style={{ backgroundColor: "lightblue" }}
 					className={active ? "navbar-burger is-active" : "navbar-burger"}
 					aria-label="menu"
 					aria-expanded="false"
@@ -66,7 +67,9 @@ const NavLinks = (props) => {
 				) : (
 					<>
 						<Link to="/login" className="navbar-item">
-							<button class="button">Login</button>
+							<button class="button" style={{ backgroundColor: "lightblue" }}>
+								Login
+							</button>
 						</Link>
 						<Link to="/register" className="navbar-item">
 							<button class="button">Register</button>

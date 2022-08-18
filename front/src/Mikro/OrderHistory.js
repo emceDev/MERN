@@ -8,6 +8,7 @@ export const OrderHistory = () => {
 	const { userOrders, isLoading, isError, isSuccess, message } = useSelector(
 		(state) => state.order
 	);
+	const { user } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	function onLoad() {
 		dispatch(loadUserOrders());
@@ -15,6 +16,9 @@ export const OrderHistory = () => {
 	function onDeleteOrder(id) {
 		console.log(id);
 		dispatch(deleteOrder(id));
+	}
+	function orderAction(type, id) {
+		console.log(type, id);
 	}
 	useEffect(() => {
 		onLoad();
@@ -25,6 +29,7 @@ export const OrderHistory = () => {
 			<button className="button" onClick={() => setOrderHistory(!orderHistory)}>
 				{orderHistory ? "minimize history" : "show history"}
 			</button>
+
 			{!orderHistory ? null : (
 				<section className="section is-medium">
 					<h1 className="title">Order History</h1>
@@ -68,7 +73,8 @@ export const OrderHistory = () => {
 											<Order
 												order={order}
 												key={order.id}
-												deleteOrder={(id) => onDeleteOrder(id)}
+												orderAction={(type, id) => orderAction(type, id)}
+												userId={user._id}
 											/>
 										) : null;
 									})}
