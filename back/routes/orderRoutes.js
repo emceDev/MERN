@@ -6,6 +6,7 @@ import {
 	getOrderList,
 	getUserOrders,
 	setOrder,
+	setOrderStatus,
 	updateOrder,
 } from "../controllers/orderController.js";
 
@@ -17,6 +18,7 @@ orderRouter.get("/", protect, getOrder);
 orderRouter.post("/", protect, setOrder);
 orderRouter.put("/:id", protect, updateOrder);
 orderRouter.put("/:id/activate", protect, activateOrder);
+orderRouter.put("/:id/changeStatus/", protect, setOrderStatus);
 orderRouter.put("/delete/:id", protect, deleteOrder);
 orderRouter.get("/orderList", protect, getOrderList);
 orderRouter.get("/userOrder", protect, getUserOrders);

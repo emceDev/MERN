@@ -89,6 +89,27 @@ const activateOrder = async (url, token) => {
 
 	return res.data;
 };
+// changing order status:
+// removed, in-progress, finished, waiting
+const setOrderStatus = async (url, token, status) => {
+	// console.log("status", status);
+	// console.log(status);
+	const config = {
+		headers: {
+			Authorization: `Bearer: ${token}`,
+			params: { user: token },
+		},
+	};
+	const res = await axios.put(
+		API_URL + url + "/changeStatus/",
+		{ status: status },
+		config
+	);
+	console.log("response from order status: ");
+	console.log(res.data);
+	return res.data;
+};
+
 const orderService = {
 	create,
 	deleteOrder,
@@ -96,6 +117,7 @@ const orderService = {
 	updateOrder,
 	getAllOrders,
 	activateOrder,
+	setOrderStatus,
 };
 
 export default orderService;

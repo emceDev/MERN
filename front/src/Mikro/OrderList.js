@@ -18,7 +18,7 @@ export const OrderList = () => {
 	useEffect(() => {
 		console.log(orders);
 	}, [orders]);
-	function onActivateOrder(id) {
+	function orderAction(type, id) {
 		console.log("activating id");
 		console.log(id);
 		dispatch(activateOrder(id));
@@ -57,7 +57,7 @@ export const OrderList = () => {
 									<Order
 										order={order}
 										type="worker"
-										deleteOrder={(id) => onActivateOrder(id)}
+										orderAction={(type, id) => orderAction(type, id)}
 									/>
 								);
 							})

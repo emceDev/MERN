@@ -1,7 +1,11 @@
 import { Order } from "../Nano/Order";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { loadUserOrders, deleteOrder } from "../features/orders/orderSlice";
+import {
+	loadUserOrders,
+	deleteOrder,
+	setOrderStatus,
+} from "../features/orders/orderSlice";
 
 export const OrderHistory = () => {
 	const [orderHistory, setOrderHistory] = useState(false);
@@ -18,7 +22,8 @@ export const OrderHistory = () => {
 		dispatch(deleteOrder(id));
 	}
 	function orderAction(type, id) {
-		console.log(type, id);
+		// console.log({ id, type });
+		dispatch(setOrderStatus({ id, type }));
 	}
 	useEffect(() => {
 		onLoad();
@@ -40,28 +45,30 @@ export const OrderHistory = () => {
 									<thead>
 										<tr>
 											<th>
-												<abbr title="name">Name</abbr>
+												<abbr title="Order title">Title of order</abbr>
 											</th>
 											<th>
-												<abbr title="creator">Creator</abbr>
+												<abbr title="creator">Creator name</abbr>
 											</th>
 											<th>
-												<abbr title="worker">Worker</abbr>
+												<abbr title="worker working on that task">
+													Worker name
+												</abbr>
 											</th>
 											<th>
-												<abbr title="description">Desc</abbr>
+												<abbr title="task description">Description</abbr>
 											</th>
 											<th>
-												<abbr title="status">Stat</abbr>
+												<abbr title="Current task status">Status</abbr>
 											</th>
 											<th>
-												<abbr title="creation Date">Created</abbr>
+												<abbr title="creation Date">Creation Date</abbr>
 											</th>
 											<th>
-												<abbr title="order process started">OPD</abbr>
+												<abbr title="order process started">Begin date</abbr>
 											</th>
 											<th>
-												<abbr title="finalization Date">Final</abbr>
+												<abbr title="task finalization Date">Finish date</abbr>
 											</th>
 											<th>
 												<abbr title="commment">Comm</abbr>

@@ -101,6 +101,30 @@ export const activateOrder = asyncHandler(async (req, res) => {
 	}
 });
 
+export const setOrderStatus = asyncHandler(async (req, res) => {
+	console.log("OrderStatusChange");
+	console.log(req.body.status, req.params.id);
+	const order = await orderModel.findById(req.params.id);
+	console.log("beforechange");
+	console.log(order);
+	if (!order) {
+		res.status(400);
+		throw new Error("order not found");
+	}
+	// transaction should be made here.
+	try {
+		const updated = await orderModel.findByIdAndUpdate(
+			req.params.id,
+			{ $set: { status: req.body.status, finishedBy: req.user.id } },
+			{ new: true }
+		);
+
+		return res.json({ order: updated });
+	} catch (error) {
+		throw Error("error at changing order status ", error);
+	}
+});
+
 export const getUserOrders = asyncHandler(async (req, res) => {
 	const userData = await userModel.findById(req.user._id);
 	if (!userData.orders) {

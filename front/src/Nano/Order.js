@@ -34,21 +34,20 @@ export const Order = (props) => {
 			finish button
 				-when worker||creator===creator or worker
 				-when status===in-progress */}
-			{props.userId === creator &&
-			status !== "in-progress" &&
-			status !== "removed" ? (
+			{props.userId === creator && status === "finished" ? (
 				<button
 					className="button"
-					onClick={() => props.orderAction("delete", _id)}
+					onClick={() => props.orderAction("removed", _id)}
 				>
 					Remove
 				</button>
 			) : creator !== props.userId &&
-			  status != "removed" &&
-			  status != "in-progress" ? (
+			  status !== "removed" &&
+			  status !== "in-progress" &&
+			  status !== "finished" ? (
 				<button
 					className="button"
-					onClick={() => props.orderAction("activate", _id)}
+					onClick={() => props.orderAction("in-progress", _id)}
 				>
 					Activate
 				</button>
@@ -56,7 +55,7 @@ export const Order = (props) => {
 			  (status === "in-progress" && props.userId === worker) ? (
 				<button
 					className="button"
-					onClick={() => props.orderAction("finish", _id)}
+					onClick={() => props.orderAction("finished", _id)}
 				>
 					Finish
 				</button>

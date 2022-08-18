@@ -116,6 +116,28 @@ export const activateOrder = createAsyncThunk(
 		}
 	}
 );
+export const setOrderStatus = createAsyncThunk(
+	"orders/setOrderStatus",
+	async (data, thunkApi) => {
+		try {
+			const token = thunkApi.getState().auth.user.token;
+			let x = await orderService.setOrderStatus(data.id, token, data.type);
+			console.log("set rodedr statjs");
+			console.log(x);
+			return x;
+		} catch (error) {
+			console.log("order slice error");
+			console.log(error);
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+			return thunkApi.rejectWithValue(message);
+		}
+	}
+);
 const orderSlice = createSlice({
 	name: "ordersSlice",
 	initialState,
@@ -190,6 +212,31 @@ const orderSlice = createSlice({
 				state.userOrders.push(action.payload.order);
 			})
 			.addCase(activateOrder.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.message = action.payload;
+			})
+			.addCase(setOrderStatus.pending, (state) => {
+				state.isLoading = true;
+			})
+			.addCase(setOrderStatus.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.isSucces = true;
+				console.log("action");
+				console.log(action.payload.order.status);
+				console.log("action end");
+				state.orders = state.orders.filter((ord) =>
+					ord._id === action.payload.order._id
+						? (ord.status = action.payload.order.status)
+						: ord
+				);
+				state.userOrders = state.userOrders.filter((ord) =>
+					ord._id === action.payload.order._id
+						? (ord.status = action.payload.order.status)
+						: ord
+				);
+			})
+			.addCase(setOrderStatus.rejected, (state, action) => {
 				state.isLoading = false;
 				state.isError = true;
 				state.message = action.payload;
