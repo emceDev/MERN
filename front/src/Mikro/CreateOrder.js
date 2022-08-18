@@ -8,7 +8,12 @@ export const CreateOrder = () => {
 	const [price, setPrice] = useState();
 	const [modalActive, setModalActive] = useState(false);
 	const { user } = useSelector((state) => state.auth);
-	const orderData = { name, creator: user._id, description };
+	const orderData = {
+		name,
+		creator: user._id,
+		creatorName: user.name,
+		description,
+	};
 	const dispatch = useDispatch();
 	async function onSubmitOrder() {
 		dispatch(submitOrder(orderData));

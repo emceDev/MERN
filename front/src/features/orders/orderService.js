@@ -78,14 +78,21 @@ const updateOrder = async (url, orderData, token) => {
 
 	return res.data;
 };
-const activateOrder = async (url, token) => {
+const activateOrder = async (data, token) => {
 	const config = {
 		headers: {
 			Authorization: `Bearer: ${token}`,
 			params: { user: token },
 		},
 	};
-	const res = await axios.put(API_URL + url + "/activate", {}, config);
+	console.log("name of worker");
+	console.log(data.name);
+	let name = data.name;
+	const res = await axios.put(
+		API_URL + data.id + "/activate",
+		{ name },
+		config
+	);
 
 	return res.data;
 };

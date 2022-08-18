@@ -3,6 +3,8 @@ export const Order = (props) => {
 		_id,
 		name,
 		creator,
+		creatorName,
+		workerName,
 		worker,
 		description,
 		status,
@@ -14,11 +16,12 @@ export const Order = (props) => {
 	return (
 		<tr key={_id}>
 			<td>{name}</td>
-			<td>{creator}</td>
-			{worker ? <td>{worker}</td> : null}
+			<td>{creatorName}</td>
+			{workerName ? <td>{workerName}</td> : <td></td>}
 			<td>{description}</td>
 			<td>{status}</td>
 			<td>{created}</td>
+
 			{started ? <td>{started}</td> : null}
 			{finalized ? <td>{finalized}</td> : null}
 			{comment ? <td>{comment}</td> : null}
@@ -34,7 +37,8 @@ export const Order = (props) => {
 			finish button
 				-when worker||creator===creator or worker
 				-when status===in-progress */}
-			{props.userId === creator && status === "finished" ? (
+			{(props.userId === creator && status === "finished") ||
+			(props.userId === creator && status === "waiting") ? (
 				<button
 					className="button"
 					onClick={() => props.orderAction("removed", _id)}
@@ -60,7 +64,7 @@ export const Order = (props) => {
 					Finish
 				</button>
 			) : (
-				<p>OrderRemoved</p>
+				<p></p>
 			)}
 		</tr>
 	);

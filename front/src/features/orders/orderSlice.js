@@ -99,10 +99,11 @@ export const updateOrder = createAsyncThunk(
 );
 export const activateOrder = createAsyncThunk(
 	"orders/activate",
-	async (url, thunkApi) => {
+	async (data, thunkApi) => {
+		console.log(data);
 		try {
 			const token = thunkApi.getState().auth.user.token;
-			return await orderService.activateOrder(url, token);
+			return await orderService.activateOrder(data, token);
 		} catch (error) {
 			console.log("order slice error");
 			console.log(error);
@@ -170,21 +171,21 @@ const orderSlice = createSlice({
 				state.isError = true;
 				state.message = action.payload;
 			})
-			.addCase(deleteOrder.pending, (state) => {
-				state.isLoading = true;
-			})
-			.addCase(deleteOrder.fulfilled, (state, action) => {
-				state.isLoading = false;
-				state.isSucces = true;
-				state.userOrders = state.userOrders.filter((ord) =>
-					ord._id === action.payload.id ? (ord.status = "removed") : ord
-				);
-			})
-			.addCase(deleteOrder.rejected, (state, action) => {
-				state.isLoading = false;
-				state.isError = true;
-				state.message = action.payload;
-			})
+			// .addCase(deleteOrder.pending, (state) => {
+			// 	state.isLoading = true;
+			// })
+			// .addCase(deleteOrder.fulfilled, (state, action) => {
+			// 	state.isLoading = false;
+			// 	state.isSucces = true;
+			// 	state.userOrders = state.userOrders.filter((ord) =>
+			// 		ord._id === action.payload.id ? (ord.status = "removed") : ord
+			// 	);
+			// })
+			// .addCase(deleteOrder.rejected, (state, action) => {
+			// 	state.isLoading = false;
+			// 	state.isError = true;
+			// 	state.message = action.payload;
+			// })
 			.addCase(loadAllOrders.pending, (state) => {
 				state.isLoading = true;
 			})
@@ -233,7 +234,7 @@ const orderSlice = createSlice({
 				state.userOrders = state.userOrders.filter((ord) =>
 					ord._id === action.payload.order._id
 						? (ord.status = action.payload.order.status)
-						: ord
+						: action.payload.order
 				);
 			})
 			.addCase(setOrderStatus.rejected, (state, action) => {

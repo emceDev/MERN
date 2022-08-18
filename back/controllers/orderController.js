@@ -9,12 +9,14 @@ export const getOrder = asyncHandler(async (req, res) => {
 
 // creator - creates order - Transaction needed here
 export const setOrder = asyncHandler(async (req, res) => {
-	const { description, name } = req.body;
+	const { description, name, creatorName } = req.body;
 	try {
 		const order = await orderModel.create({
 			name,
 			creator: req.user.id,
+			creatorName: creatorName,
 			worker: null,
+			workerName: null,
 			description,
 			status: "waiting",
 			commment: null,
@@ -79,34 +81,41 @@ export const getOrderList = asyncHandler(async (req, res) => {
 // activates order - Transaction needed here
 export const activateOrder = asyncHandler(async (req, res) => {
 	const order = await orderModel.findById(req.params.id);
+	console.log(req.body);
 	if (!order) {
 		res.status(400);
 		throw new Error("order not found");
 	}
 	// transaction should be made here.
 	try {
-		await orderModel.findByIdAndUpdate(
+		const updated = await orderModel.findByIdAndUpdate(
 			req.params.id,
-			{ $set: { status: "in-progress", worker: req.user.id } },
-			{ new: false }
+			{
+				$set: {
+					status: "in-progress",
+					worker: req.user.id,
+					workerName: req.body.name,
+				},
+			},
+			{ new: true }
 		);
 		await userModel.findByIdAndUpdate(
 			req.user.id,
 			{ $push: { orders: req.params.id } },
-			{ new: false }
+			{ new: true }
 		);
-		return res.json({ order });
+		return res.json({ order: updated });
 	} catch (error) {
-		throw Error("error at changing order status or setting user's orders");
+		throw Error("error at activating order or setting user's orders");
 	}
 });
 
 export const setOrderStatus = asyncHandler(async (req, res) => {
-	console.log("OrderStatusChange");
-	console.log(req.body.status, req.params.id);
+	// console.log("OrderStatusChange");
+	// console.log(req.body.status, req.params.id);
 	const order = await orderModel.findById(req.params.id);
-	console.log("beforechange");
-	console.log(order);
+	// console.log("beforechange");
+	// console.log(order);
 	if (!order) {
 		res.status(400);
 		throw new Error("order not found");

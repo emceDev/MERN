@@ -8,6 +8,7 @@ export const OrderList = () => {
 	const { orders, isLoading, isError, isSuccess, message } = useSelector(
 		(state) => state.order
 	);
+	const { user } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	function onLoad() {
 		dispatch(loadAllOrders());
@@ -19,18 +20,18 @@ export const OrderList = () => {
 		console.log(orders);
 	}, [orders]);
 	function orderAction(type, id) {
-		console.log("activating id");
-		console.log(id);
-		dispatch(activateOrder(id));
+		let name = user.name;
+		const data = { id, name };
+		dispatch(activateOrder(data));
 	}
 	return (
 		<div>
 			<button className="button" onClick={() => setShowList(!showList)}>
-				{showList ? "minimize list" : "show list"}
+				{showList ? "Minimize List" : "Show Available Orders"}
 			</button>
 			{!showList ? null : (
 				<section className="section is-medium">
-					<h1 className="title">List of aviable orders</h1>
+					<h1 className="title">List of available orders</h1>
 					<table class="table">
 						<thead>
 							<tr>
@@ -62,7 +63,7 @@ export const OrderList = () => {
 								);
 							})
 						) : (
-							<p>no orderds yet!</p>
+							<p>no orders yet!</p>
 						)}
 					</table>
 				</section>

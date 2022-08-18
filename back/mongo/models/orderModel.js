@@ -10,8 +10,13 @@ const orderSchema = new mongoose.Schema({
 		required: true,
 		ref: "user",
 	},
-
+	creatorName: {
+		type: String,
+	},
 	worker: {
+		type: String,
+	},
+	workerName: {
 		type: String,
 	},
 	description: {

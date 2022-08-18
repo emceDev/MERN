@@ -32,7 +32,7 @@ export const OrderHistory = () => {
 	return (
 		<div>
 			<button className="button" onClick={() => setOrderHistory(!orderHistory)}>
-				{orderHistory ? "minimize history" : "show history"}
+				{orderHistory ? "Minimize" : "Show Orders"}
 			</button>
 
 			{!orderHistory ? null : (
@@ -71,7 +71,7 @@ export const OrderHistory = () => {
 												<abbr title="task finalization Date">Finish date</abbr>
 											</th>
 											<th>
-												<abbr title="commment">Comm</abbr>
+												<abbr title="commment">Commment</abbr>
 											</th>
 										</tr>
 									</thead>
