@@ -9,7 +9,7 @@ import { Register } from "./Makro/Register";
 import { Navigation } from "./Mikro/Navigation";
 import { ProtectedRoute } from "./Mikro/ProtectedRoute";
 import { useSelector } from "react-redux";
-import Logo from "./images/landing2.js";
+// import Logo from "./images/landing2.js";
 import tractor from "./images/landing.jpg";
 function App() {
 	const { user } = useSelector((state) => state.auth);
@@ -24,14 +24,14 @@ function App() {
 				backgroundImage: `url(${tractor})`,
 			}}
 		>
-			<Logo
+			{/* <Logo
 				style={{
 					position: "fixed",
 					marginTop: "2.5vh",
 					height: "95vh",
 					width: "100vw",
 				}}
-			/>
+			/> */}
 
 			<Router>
 				<div>
