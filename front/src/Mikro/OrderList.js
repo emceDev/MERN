@@ -5,9 +5,7 @@ import { loadAllOrders, activateOrder } from "../features/orders/orderSlice";
 
 export const OrderList = () => {
 	const [showList, setShowList] = useState(false);
-	const { orders, isLoading, isError, isSuccess, message } = useSelector(
-		(state) => state.order
-	);
+	const { orders } = useSelector((state) => state.order);
 	const { user } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	function onLoad() {
@@ -30,7 +28,7 @@ export const OrderList = () => {
 				{showList ? "Minimize List" : "Show Available Orders"}
 			</button>
 			{!showList ? null : (
-				<section className="section is-medium">
+				<section className="section is-small">
 					<h1 className="title">List of available orders</h1>
 					<table class="table">
 						<thead>

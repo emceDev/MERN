@@ -3,20 +3,44 @@
 $mobile:1000px;
 $bcgWhite:rgba(255, 255, 255, 0.907);
 $section-background-color:#FA7C91;
-
+@import "../../node_modules/bulma/sass/layout/section.sass";
 svg{
     z-index: -1000;
 }
 
 .section{
     transition: ease-out width 0.2s;
-    width: 90vw;
+    // width: 90vw;
+    width: auto;
     margin:0 auto;
+    padding: 1rem;
     background:$bcgWhite;
     @include until($desktop) {
-        width: 90vw;
+        width: 99vw;
+        padding: 0%;
+        h1{
+            padding-top: 4vw;
+            padding-left: 7vw;
+        }
       }
- 
+}
+.field{
+    max-width:100vw;
+    // background-color: red;
+    }
+.Register, .Login{
+    //  background-color: red;
+    width: 50vw;
+    .field{
+        width:100%;
+        }
+    @include until($desktop) {
+        width: 96vw;
+        padding: 1rem;
+      }
+     
+       
+    
 }
 tbody td{
     text-align: center;
@@ -25,19 +49,22 @@ tbody td{
     padding:0.5em
 }
 
-.field{
-    background-color: white;
-
+.navbar{
+   background-color: transparent;
 }
-
-// $section-padding:100px;
-// Import only what you need from Bulma
-// @import "../node_modules/bulma/sass/utilities/_all.sass";
-// @import "../node_modules/bulma/sass/base/_all.sass";
-// @import "../node_modules/bulma/sass/elements/button.sass";
-// @import "../node_modules/bulma/sass/elements/container.sass";
-// @import "../node_modules/bulma/sass/elements/title.sass";
-// @import "../node_modules/bulma/sass/form/_all.sass";
-// @import "../node_modules/bulma/sass/components/navbar.sass";
-// @import "../node_modules/bulma/sass/layout/hero.sass";
-@import "../../node_modules/bulma/sass/layout/section.sass";
+.Landing{
+    padding: 3vw;
+    h1{
+        background-color: $bcgWhite;
+        padding: 3vw;
+        font-size:7vw;
+        font-weight: 500;
+    }
+    p{
+        background-color: $bcgWhite;
+        
+        padding-left: 5vw;
+        padding-bottom:3vw;
+        font-size: 4.5vw;
+    }
+}

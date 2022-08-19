@@ -10,11 +10,20 @@ import { Navigation } from "./Mikro/Navigation";
 import { ProtectedRoute } from "./Mikro/ProtectedRoute";
 import { useSelector } from "react-redux";
 import Logo from "./images/landing2.js";
-
+import tractor from "./images/landing.jpg";
 function App() {
 	const { user } = useSelector((state) => state.auth);
 	return (
-		<>
+		<div
+			style={{
+				// backgroundColor: "red",
+				backgroundRepeat: "no-repeat",
+				backgroundAttachment: "fixed",
+				backgroundPosition: "center",
+				minHeight: "100vh",
+				backgroundImage: `url(${tractor})`,
+			}}
+		>
 			<Logo
 				style={{
 					position: "fixed",
@@ -23,6 +32,7 @@ function App() {
 					width: "100vw",
 				}}
 			/>
+
 			<Router>
 				<div>
 					<Navigation />
@@ -50,7 +60,7 @@ function App() {
 					</Routes>
 				</div>
 			</Router>
-		</>
+		</div>
 	);
 }
 

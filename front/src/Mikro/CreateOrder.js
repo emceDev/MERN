@@ -17,6 +17,7 @@ export const CreateOrder = () => {
 	const dispatch = useDispatch();
 	async function onSubmitOrder() {
 		dispatch(submitOrder(orderData));
+		setModalActive(false);
 	}
 	return (
 		<div>
@@ -99,7 +100,11 @@ export const CreateOrder = () => {
 						submit order
 					</button>
 				</div>
-				<button class="modal-close is-large" aria-label="close"></button>
+				<button
+					class="modal-close is-large"
+					aria-label="close"
+					onClick={() => setModalActive(false)}
+				></button>
 			</div>
 			<button className="button" onClick={() => setModalActive(true)}>
 				Create order

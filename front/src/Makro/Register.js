@@ -38,7 +38,7 @@ export const Register = () => {
 	}
 
 	return (
-		<div className="section form">
+		<div className="Register section form">
 			<div class="field">
 				<label class="label">Name</label>
 				<div class="control">

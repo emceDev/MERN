@@ -32,7 +32,7 @@ export const Login = () => {
 	}
 
 	return (
-		<section className="section form">
+		<section className="Login section form">
 			<div class="field">
 				<label class="label">test Email: 2</label>
 				<div class="control">

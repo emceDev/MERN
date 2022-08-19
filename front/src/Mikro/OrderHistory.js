@@ -1,25 +1,15 @@
 import { Order } from "../Nano/Order";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import {
-	loadUserOrders,
-	deleteOrder,
-	setOrderStatus,
-} from "../features/orders/orderSlice";
+import { loadUserOrders, setOrderStatus } from "../features/orders/orderSlice";
 
 export const OrderHistory = () => {
 	const [orderHistory, setOrderHistory] = useState(false);
-	const { userOrders, isLoading, isError, isSuccess, message } = useSelector(
-		(state) => state.order
-	);
+	const { userOrders } = useSelector((state) => state.order);
 	const { user } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	function onLoad() {
 		dispatch(loadUserOrders());
-	}
-	function onDeleteOrder(id) {
-		console.log(id);
-		dispatch(deleteOrder(id));
 	}
 	function orderAction(type, id) {
 		// console.log({ id, type });
@@ -36,7 +26,7 @@ export const OrderHistory = () => {
 			</button>
 
 			{!orderHistory ? null : (
-				<section className="section is-medium">
+				<section className="section is-small">
 					<h1 className="title">Order History</h1>
 					<div class="table-container">
 						{userOrders ? (
