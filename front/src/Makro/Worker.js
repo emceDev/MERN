@@ -5,8 +5,8 @@ export const Worker = () => {
 	return (
 		<div className="container">
 			<section class="section">
-				<OrderHistory />
 				<OrderList />
+				<OrderHistory />
 			</section>
 		</div>
 	);

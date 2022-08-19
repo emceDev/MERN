@@ -46,15 +46,15 @@ const NavLinks = (props) => {
 		<>
 			<div className="navbar-start" onClick={() => props.switchOff()}>
 				<Link to="/" className="navbar-item">
-					<button class="button">HomePage</button>
+					<button class="button">AgroFleet</button>
 				</Link>
 
 				<Link to="/worker" className="navbar-item">
-					<button class="button">Worker</button>
+					<button class="button">BrowseJobs</button>
 				</Link>
 
 				<Link to="/client" className="navbar-item">
-					<button class="button">Client</button>
+					<button class="button">PostJobs</button>
 				</Link>
 			</div>
 			<div className="navbar-end" onClick={() => props.switchOff()}>
