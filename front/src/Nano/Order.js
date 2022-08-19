@@ -1,4 +1,13 @@
 export const Order = (props) => {
+	function dateParser(string) {
+		let date = new Date(string);
+		let m = date.getMonth() + 1;
+		let d = date.getDay();
+		let y = date.getFullYear();
+		let hr = date.getHours();
+		let min = date.getMinutes();
+		return `${d}-${m}-${y}:${hr}-${min}`;
+	}
 	const {
 		_id,
 		name,
@@ -8,10 +17,10 @@ export const Order = (props) => {
 		worker,
 		description,
 		status,
-		created,
-		started,
-		finalized,
 		comment,
+		finishedDate,
+		createdDate,
+		startedDate,
 	} = props.order;
 	return (
 		<tr key={_id}>
@@ -20,10 +29,9 @@ export const Order = (props) => {
 			{workerName ? <td>{workerName}</td> : <td></td>}
 			<td>{description}</td>
 			<td>{status}</td>
-			<td>{created}</td>
-
-			{started ? <td>{started}</td> : null}
-			{finalized ? <td>{finalized}</td> : null}
+			<td>{dateParser(createdDate)}</td>
+			{startedDate ? <td>{dateParser(startedDate)}</td> : null}
+			{finishedDate ? <td>{dateParser(finishedDate)}</td> : null}
 			{comment ? <td>{comment}</td> : null}
 			{/* BUTTON LOGIC ON the front
 			delete button

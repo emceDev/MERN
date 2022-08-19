@@ -23,6 +23,10 @@ const orderSchema = new mongoose.Schema({
 		type: String,
 		required: [true, "please fill all data"],
 	},
+	createdDate: { type: Date, default: Date.now },
+	startedDate: { type: Date },
+	finishedDate: { type: Date },
+	finishedBy: { type: String },
 	status: {
 		type: String,
 	},

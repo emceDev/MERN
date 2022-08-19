@@ -171,21 +171,6 @@ const orderSlice = createSlice({
 				state.isError = true;
 				state.message = action.payload;
 			})
-			// .addCase(deleteOrder.pending, (state) => {
-			// 	state.isLoading = true;
-			// })
-			// .addCase(deleteOrder.fulfilled, (state, action) => {
-			// 	state.isLoading = false;
-			// 	state.isSucces = true;
-			// 	state.userOrders = state.userOrders.filter((ord) =>
-			// 		ord._id === action.payload.id ? (ord.status = "removed") : ord
-			// 	);
-			// })
-			// .addCase(deleteOrder.rejected, (state, action) => {
-			// 	state.isLoading = false;
-			// 	state.isError = true;
-			// 	state.message = action.payload;
-			// })
 			.addCase(loadAllOrders.pending, (state) => {
 				state.isLoading = true;
 			})
@@ -206,9 +191,7 @@ const orderSlice = createSlice({
 				state.isLoading = false;
 				state.isSucces = true;
 				state.orders = state.orders.filter((ord) =>
-					ord._id === action.payload.order._id
-						? (ord.status = "in-progress")
-						: ord
+					ord._id === action.payload.order._id ? action.payload.order : ord
 				);
 				state.userOrders.push(action.payload.order);
 			})
