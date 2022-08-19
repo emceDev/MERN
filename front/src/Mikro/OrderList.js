@@ -16,9 +16,9 @@ export const OrderList = () => {
 	useEffect(() => {
 		onLoad();
 	}, []);
-	useEffect(() => {
-		console.log(orders);
-	}, [orders]);
+	// useEffect(() => {
+	// 	console.log(orders);
+	// }, [orders]);
 	function orderAction(type, id) {
 		let name = user.name;
 		const data = { id, name };
@@ -36,19 +36,19 @@ export const OrderList = () => {
 						<thead>
 							<tr>
 								<th>
-									<abbr title="name">Name</abbr>
+									<abbr title="name">Title</abbr>
 								</th>
 								<th>
 									<abbr title="creator">Creator</abbr>
 								</th>
 								<th>
-									<abbr title="description">Desc</abbr>
+									<abbr title="description">Description</abbr>
 								</th>
 								<th>
-									<abbr title="status">Stat</abbr>
+									<abbr title="status">Status</abbr>
 								</th>
 								<th>
-									<abbr title="creation Date">Created</abbr>
+									<abbr title="creation Date">Created Date</abbr>
 								</th>
 							</tr>
 						</thead>

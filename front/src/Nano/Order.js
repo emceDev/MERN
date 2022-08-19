@@ -1,13 +1,4 @@
 export const Order = (props) => {
-	function dateParser(string) {
-		let date = new Date(string);
-		let m = date.getMonth() + 1;
-		let d = date.getDay();
-		let y = date.getFullYear();
-		let hr = date.getHours();
-		let min = date.getMinutes();
-		return `${d}-${m}-${y}:${hr}-${min}`;
-	}
 	const {
 		_id,
 		name,
@@ -22,17 +13,27 @@ export const Order = (props) => {
 		createdDate,
 		startedDate,
 	} = props.order;
+	function dateParser(string) {
+		let date = new Date(string);
+		let m = date.getMonth() + 1;
+		let d = date.getDay();
+		let y = date.getFullYear();
+		let hr = date.getHours();
+		let min = date.getMinutes();
+		return `${d}-${m}-${y}:${hr}-${min}`;
+	}
 	return (
 		<tr key={_id}>
 			<td>{name}</td>
 			<td>{creatorName}</td>
-			{workerName ? <td>{workerName}</td> : <td></td>}
 			<td>{description}</td>
 			<td>{status}</td>
 			<td>{dateParser(createdDate)}</td>
-			{startedDate ? <td>{dateParser(startedDate)}</td> : null}
-			{finishedDate ? <td>{dateParser(finishedDate)}</td> : null}
-			{comment ? <td>{comment}</td> : null}
+			{workerName ? <td>{workerName}</td> : <td></td>}
+
+			{startedDate ? <td>{dateParser(startedDate)}</td> : <td></td>}
+			{finishedDate ? <td>{dateParser(finishedDate)}</td> : <td></td>}
+			{comment ? <td>{comment}</td> : <td></td>}
 			{/* BUTTON LOGIC ON the front
 			delete button
 				-when creator=user

@@ -41,29 +41,31 @@ export const OrderHistory = () => {
 					<div class="table-container">
 						{userOrders ? (
 							<div>
-								<table class="table">
+								<table class="table has-text-centered">
 									<thead>
 										<tr>
 											<th>
-												<abbr title="Order title">Title of order</abbr>
+												<abbr title="name">Title</abbr>
 											</th>
 											<th>
-												<abbr title="creator">Creator name</abbr>
+												<abbr title="creator">Creator</abbr>
 											</th>
+											<th>
+												<abbr title="description">Description</abbr>
+											</th>
+											<th>
+												<abbr title="status">Status</abbr>
+											</th>
+											<th>
+												<abbr title="creation Date">Created Date</abbr>
+											</th>
+
 											<th>
 												<abbr title="worker working on that task">
 													Worker name
 												</abbr>
 											</th>
-											<th>
-												<abbr title="task description">Description</abbr>
-											</th>
-											<th>
-												<abbr title="Current task status">Status</abbr>
-											</th>
-											<th>
-												<abbr title="creation Date">Creation Date</abbr>
-											</th>
+
 											<th>
 												<abbr title="order process started">Begin date</abbr>
 											</th>
@@ -71,20 +73,22 @@ export const OrderHistory = () => {
 												<abbr title="task finalization Date">Finish date</abbr>
 											</th>
 											<th>
-												<abbr title="commment">Commment</abbr>
+												<abbr title="commment">Comment</abbr>
 											</th>
 										</tr>
 									</thead>
-									{userOrders.map((order) => {
-										return order ? (
-											<Order
-												order={order}
-												key={order.id}
-												orderAction={(type, id) => orderAction(type, id)}
-												userId={user._id}
-											/>
-										) : null;
-									})}
+									<tbody>
+										{userOrders.map((order) => {
+											return order ? (
+												<Order
+													order={order}
+													key={order.id}
+													orderAction={(type, id) => orderAction(type, id)}
+													userId={user._id}
+												/>
+											) : null;
+										})}
+									</tbody>
 								</table>
 							</div>
 						) : (

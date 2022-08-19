@@ -124,26 +124,29 @@ export const setOrderStatus = asyncHandler(async (req, res) => {
 	// transaction should be made here.
 	try {
 		console.log(req.body.status);
-		let data =
-			req.body.status === "finished"
-				? { finishedBy: req.user.id, finishedDate: Date.now() }
-				: null;
-		console.log("data!!");
 
-		const { finishedBy, finishedDate } = data;
-		console.log(finishedDate);
-		console.log("EOF data");
-		const updated = await orderModel.findByIdAndUpdate(
-			req.params.id,
-			{
-				$set: {
-					status: req.body.status,
-					finishedBy: finishedBy,
-					finishedDate: finishedDate,
-				},
-			},
-			{ new: true }
-		);
+		const updated =
+			req.body.status === "finished"
+				? await orderModel.findByIdAndUpdate(
+						req.params.id,
+						{
+							$set: {
+								status: req.body.status,
+								finishedBy: req.body.finishedBy,
+								finishedDate: Date.now(),
+							},
+						},
+						{ new: true }
+				  )
+				: await orderModel.findByIdAndUpdate(
+						req.params.id,
+						{
+							$set: {
+								status: req.body.status,
+							},
+						},
+						{ new: true }
+				  );
 
 		return res.json({ order: updated });
 	} catch (error) {

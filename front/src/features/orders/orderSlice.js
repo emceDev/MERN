@@ -194,6 +194,9 @@ const orderSlice = createSlice({
 					ord._id === action.payload.order._id ? action.payload.order : ord
 				);
 				state.userOrders.push(action.payload.order);
+				state.orders = state.orders.filter(
+					(ord) => ord._id !== action.payload.order._id
+				);
 			})
 			.addCase(activateOrder.rejected, (state, action) => {
 				state.isLoading = false;
