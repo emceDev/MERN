@@ -2,69 +2,66 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# General description:
 
-In the project directory, you can run:
+This project was built in order to learn MERN stack.
+This was first NODE project hosted on external server which was fully set up by me (Nginx, pm2).
+Application has JWT token functionality, and its state is managed by redux.
+There was no mean of polishing my styling skills in this project, so Bulma was utilized.
+Project is served from AWS ubuntu :). Data is stored on MongoDB atlas.
+21-09-22: In the future there will be letsencrypt added and custom domain.
 
-### `npm start`
+# Use case:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+App would serve as a job offer site where farmers could post field jobs.
+Generaly: Farmers have huge fields to maintain and their scalability is limited by the amount of workers.
+Solution to this problem would be application allowing for outsourcing some work.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Client - posts order
+2. Worker - accepts order
 
-### `npm test`
+# Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Project consists of two folders
+/front - with frontend part of the app
+/back - with backend.
 
-### `npm run build`
+To run this project you need to:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. clone it
+2. Install dependancies
+3. modify .env variable to:
+   NODE_ENV = set to development or production
+   MONG_USER = set to mongodb atlas user
+   MONG_PASS = set to mongodb atlas password
+   JWT_SECRET = set to JWT secret token string
+4. navigate to /front and command: npm run
+5. Navigate to /back and command: node index.js
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Structure:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+BACK:
+typical node js structure, functions have comments over them despite possessing self explanatory names.
+I can say that, as I'm writing this after one month after writing those files.
+There was work over analytics functionality gathering statistics similiar to those from Monopoly https://github.com/emceDev/monopol/blob/main/pages/api/DownloadReport/index.js , but the project lacks funding :D.
 
-### `npm run eject`
+FRONT:
+Folders: app, features - redux related files (login and service state mechanism)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Makro: Sections of the website,
+Client.js - section for client (person wanting to post job)
+Worker.js - section for person wanting to search for job (worker)
+!For now both sections are aviable for every user by switching buttons, but this may change in future.
+LogReg - login or register switch to load <Register/> or <Login/> components
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Mikro: Components of the website,
+Create order - form to post orders(jobs)...
+Navigation - Navigation bar
+OrderHistory - User order history, same for workers and clients
+OrderList - List of aviable orders
+ProtectedRoute - Route used in order to redirect not logged users to '/'
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Styles: scss styles.
+Note that I made custom svg, but replaced it with some picture from game, as it was more appropriate.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Hope this helped anyone :), Have a great day!

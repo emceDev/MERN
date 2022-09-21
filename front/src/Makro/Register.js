@@ -14,6 +14,7 @@ export const Register = () => {
 	);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		console.log("effect");
 		if (isError) {

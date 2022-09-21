@@ -3,6 +3,7 @@ import { userModel } from "../mongo/models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+// creates user
 export const setUser = asyncHandler(async (req, res) => {
 	const { name, email, password, surname, type } = req.body;
 	console.log(password, name, email);
@@ -39,7 +40,7 @@ export const setUser = asyncHandler(async (req, res) => {
 		throw new Error("invalid user data");
 	}
 });
-
+// logs user in
 export const logUser = asyncHandler(async (req, res) => {
 	const { email, password } = req.body;
 
@@ -59,7 +60,7 @@ export const logUser = asyncHandler(async (req, res) => {
 		throw new Error("invalid credentials");
 	}
 });
-
+// updates user
 export const updateUser = asyncHandler(async (req, res) => {
 	const user = await userModel.findById(req.params.id);
 	if (!user) {
@@ -73,7 +74,7 @@ export const updateUser = asyncHandler(async (req, res) => {
 	);
 	res.status(200).json(updatedUser);
 });
-
+// deletes user
 export const deleteUser = asyncHandler(async (req, res) => {
 	const user = await userModel.findById(req.params.id);
 	if (!user) {
@@ -84,15 +85,15 @@ export const deleteUser = asyncHandler(async (req, res) => {
 	res.status(200).json({ id: req.params.id });
 });
 
+// gets user by id
 export const getUser = asyncHandler(async (req, res) => {
-	// console.log(req.user);
-	// { _id, name, email, surname, type, orders }
 	const userData = await userModel.findById(req.user._id);
 
 	userData.password = undefined;
 	console.log(userData);
 	res.json(userData);
 });
+// generates token
 export const tokenGen = (id) => {
 	return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "2d" });
 };

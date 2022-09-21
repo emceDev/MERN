@@ -110,13 +110,10 @@ export const activateOrder = asyncHandler(async (req, res) => {
 		throw Error("error at activating order or setting user's orders");
 	}
 });
-
+// sets orders status
 export const setOrderStatus = asyncHandler(async (req, res) => {
-	// console.log("OrderStatusChange");
-	// console.log(req.body.status, req.params.id);
 	const order = await orderModel.findById(req.params.id);
-	// console.log("beforechange");
-	// console.log(order);
+
 	if (!order) {
 		res.status(400);
 		throw new Error("order not found");
