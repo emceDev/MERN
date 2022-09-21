@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+To run this project you need to:
+
+1. clone it
+2. Install dependancies
+3. modify .env variable to:  
+   NODE_ENV = set to development or production  
+   MONG_USER = set to mongodb atlas user  
+   MONG_PASS = set to mongodb atlas password  
+   JWT_SECRET = set to JWT secret token string
+4. navigate to /front and command: npm run
+5. Navigate to /back and command: node index.js
+
 # General description
 
 This project was built in order to learn MERN stack.  
@@ -10,6 +22,16 @@ Application has JWT token functionality, and its state is managed by redux.
 There was no mean of polishing my styling skills in this project, so Bulma was utilized.  
 Project is served from AWS ubuntu :). Data is stored on MongoDB atlas.  
 21-09-22: In the future there will be letsencrypt added and custom domain.
+
+# Project structure
+
+Hosting: Amazon web services ubuntu.  
+Front: React.  
+Back: Node.  
+Database: MongoDbAtlas.  
+Styles: Bulma.css.  
+Auth: JWT,bcrypt.  
+State: Redux.
 
 # Use case
 
@@ -20,12 +42,11 @@ Solution to this problem would be application allowing for outsourcing some work
 1. Client - posts order
 2. Worker - accepts order
 
-# Structure
+# Folder structure
 
 BACK:  
 typical node js structure, functions have comments over them despite possessing self explanatory names.  
-I can say that, as I'm writing this after one month after writing those files.  
-There was work over analytics functionality gathering statistics similiar to those from [Monopoly](https://github.com/emceDev/monopol/blob/main/pages/api/DownloadReport/index.js), but the project lacks funding :D.
+I can say that, as I'm writing this after one month after writing those files.
 
 FRONT:  
 Folders: app, features - redux related files (login and service state mechanism)
@@ -46,22 +67,8 @@ ProtectedRoute - Route used in order to redirect not logged users to '/'
 Styles: scss styles.
 Note that I made custom svg, but replaced it with some picture from game, as it was more appropriate.
 
-# Folder Structure
+# notes
 
-Project consists of two folders  
-/front - with frontend part of the app  
-/back - with backend.
-
-To run this project you need to:
-
-1. clone it
-2. Install dependancies
-3. modify .env variable to:  
-   NODE_ENV = set to development or production  
-   MONG_USER = set to mongodb atlas user  
-   MONG_PASS = set to mongodb atlas password  
-   JWT_SECRET = set to JWT secret token string
-4. navigate to /front and command: npm run
-5. Navigate to /back and command: node index.js
+There was work started over analytics functionality gathering statistics similiar to those from [Monopoly](https://github.com/emceDev/monopol/blob/main/pages/api/DownloadReport/index.js), but the project lacks funding :D.
 
 # Hope this helped anyone :), Have a great day!
