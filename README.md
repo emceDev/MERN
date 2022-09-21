@@ -46,7 +46,7 @@ Solution to this problem would be application allowing for outsourcing some work
 
 BACK:  
 typical node js structure, functions have comments over them despite possessing self explanatory names.  
-I can say that, as I'm writing this after one month after writing those files.
+I can say that, as I'm writing this being one month after writing those files.
 
 FRONT:  
 Folders: app, features - redux related files (login and service state mechanism)
